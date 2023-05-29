@@ -11,7 +11,7 @@ from aiohttp.client import ClientTimeout
 DEFAULT_N_HTTP_RETRIES = 5
 DEFAULT_TIMEOUT = 15
 
-DEFAULT_GATEWAY_URL = "https://gw.playground-v2.starkex.co/v2/gateway"
+DEFAULT_GATEWAY_URL = "https://gw.playground-v2.starkex.co/gateway/v2"
 
 logger = logging.getLogger(__name__)
 

@@ -22,6 +22,7 @@ class Validator:
             "SettlementRequest",
             "TransferRequest",
             "MintRequest",
+            "MultiAssetTradeRequest",
         ]
 
     def _get_vault_ids(self, tx_dicts: List[Dict[str, Any]]) -> Set[int]:
@@ -40,6 +41,12 @@ class Validator:
                 )
             elif tx["type"] == "TransferRequest":
                 vault_ids.update((tx["receiver_vault_id"], tx["sender_vault_id"]))
+            elif tx["type"] == "MultiAssetTradeRequest":
+                for order in tx["orders"]:
+                    vault_ids.update(info["vault_id"] for info in order["give"])
+                    vault_ids.update(info["vault_id"] for info in order["receive"])
+                vault_ids.update(info["vault_id"] for info in tx["fulfillment_info"]["given"])
+                vault_ids.update(info["vault_id"] for info in tx["fulfillment_info"]["received"])
 
         return vault_ids
 

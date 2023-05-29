@@ -7,7 +7,7 @@ apt install -y docker.io
 ```
 2. Build the docker image:
 ```
-docker build -t <MEMORABLE_NAME> .
+docker build -t <MEMORABLE_NAME> . --no-cache
 ```
 3. Run the docker:
 ```
@@ -19,10 +19,10 @@ docker run -it <MEMORABLE_NAME>
 
 To print the last batch ID to console, run:
 ```
-wget -nv -q -O- https://gw.playground-v2.starkex.co/feeder_gateway/get_last_batch_id
+wget -nv -q -O- https://gw.playground-v2.starkex.co/feeder_gateway/v2/get_last_batch_id
 ```
 
 Given the batch ID (say, batch ID 23), fetch the batch info by running:
 ```
-wget -nv -q -O- https://gw.playground-v2.starkex.co/feeder_gateway/get_batch_info?batch_id=23
+wget -nv -q -O- https://gw.playground-v2.starkex.co/feeder_gateway/v2/get_batch_info?batch_id=23
 ```

@@ -13,8 +13,6 @@ from web3.contract import ContractFunction
 from web3.datastructures import AttributeDict
 from web3.types import Nonce, RPCEndpoint, TxParams, Wei
 
-from starkware.python.utils import from_bytes
-
 DEFAULT_WEI_PER_DEPOSIT = 5 * 10**15  # 0.005 ETH.
 DEFAULT_GAS_PRICE = 5 * 10**9
 CWD = os.path.dirname(__file__)
@@ -83,6 +81,7 @@ class OnchainUtils:
         Transfer ETH to the patron user, so that user can perform deposits.
         """
         tx_dict = {
+            "chainId": 5,  # Goerli.
             "to": self.patron.address,
             "from": self.funded.address,
             "nonce": self._allocate_nonce(eth_address=self.funded.address),
@@ -155,9 +154,9 @@ class OnchainUtils:
         # 2. 32bytes offset of string return value (always 0x20 in this case).
         # 3. 32bytes with the length of the revert reason.
         # 4. Revert reason string.
-        assert from_bytes(revert_payload[:0x4]) == 0x08C379A0
-        assert from_bytes(revert_payload[0x4:0x24]) == 0x20
-        msg_length = from_bytes(revert_payload[0x24:0x44])
+        assert int.from_bytes(revert_payload[:0x4], "big") == 0x08C379A0
+        assert int.from_bytes(revert_payload[0x4:0x24], "big") == 0x20
+        msg_length = int.from_bytes(revert_payload[0x24:0x44], "big")
 
         return str(revert_payload[0x44 : 0x44 + msg_length].decode("ascii"))
 

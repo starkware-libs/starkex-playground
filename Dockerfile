@@ -1,4 +1,5 @@
 FROM ciimage/python:3.9
+RUN sed -i -e 's/http:\/\/archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/' /etc/apt/sources.list
 
 # Python and pip.
 RUN apt update
@@ -11,4 +12,4 @@ RUN chmod a+x player.py
 
 # Install python packages.
 RUN python3.9 -m pip install --upgrade pip
-RUN python3.9 -m pip install -r requirements.txt
+RUN python3.9 -m pip install -r scripts/requirements.txt
